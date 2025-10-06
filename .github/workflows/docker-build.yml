@@ -48,13 +48,10 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/wishdream/kenium-music:latest
-
+          
       - name: Get new image digest
         id: digest
-        run: |
-          DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ghcr.io/wishdream/kenium-music:latest || echo "")
-          echo "digest=$DIGEST" >> $GITHUB_OUTPUT
-          echo "Built digest: $DIGEST"
+        run: echo "digest=${{ steps.build.outputs.digest }}" >> $GITHUB_OUTPUT
 
       - name: Ensure Docker Hub repo exists
         env:
