@@ -7,6 +7,7 @@ This portainer setup builds and runs two containers:
 |------------|----------|
 | **kenium** | The Discord music bot itself (Node.js app). |
 | **lavalink** | A lightweight Java server that handles all audio playback. |
+
 They're setup so that they both communicate internally so no external setup needed.
 
 ## Portainer Setup
