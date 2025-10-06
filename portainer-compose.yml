@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  kenium:
+    image: wishdream/kenium-music:latest
+    container_name: kenium-music
+    restart: unless-stopped
+    env_file:
+      - stack.env
+    depends_on:
+      - lavalink
+    volumes:
+      - kenium_data:/usr/src/app/data
+    networks:
+      - kenium_net
+    command: ["pnpm", "startNode"]
+
+  lavalink:
+    image: fredboat/lavalink:latest
+    container_name: lavalink
+    restart: unless-stopped
+    environment:
+      - SERVER_PORT=${NODE_PORT:-2333}
+      - LAVALINK_SERVER_PASSWORD=${NODE_PASSWORD}
+    volumes:
+      - lavalink_data:/opt/Lavalink/logs
+    networks:
+      - kenium_net
+    ports:
+      - "${NODE_PORT:-2333}:${NODE_PORT:-2333}"
+
+volumes:
+  kenium_data:
+  lavalink_data:
+
+networks:
+  kenium_net:
+    driver: bridge
