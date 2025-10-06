@@ -6,7 +6,7 @@ services:
     container_name: kenium-music
     restart: unless-stopped
     env_file:
-      - .env
+      - stack.env
     depends_on:
       - lavalink
     volumes:
