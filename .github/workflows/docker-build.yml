@@ -40,41 +40,19 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
+          
       - name: Build and push to GHCR
         id: build
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
+          load: true
           tags: ghcr.io/wishdream/kenium-music:latest
           
       - name: Get new image digest
         id: digest
         run: echo "digest=${{ steps.build.outputs.digest }}" >> $GITHUB_OUTPUT
-
-      - name: Ensure Docker Hub repo exists
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        run: |
-          REPO_NAME="kenium-music"
-          echo "Checking if Docker Hub repo ${REPO_NAME} exists..."
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            -u "$DOCKERHUB_USERNAME:$DOCKERHUB_TOKEN" \
-            https://hub.docker.com/v2/repositories/$DOCKERHUB_USERNAME/$REPO_NAME/)
-          
-          if [ "$STATUS" = "404" ]; then
-            echo "Repository not found. Creating..."
-            curl -s -X POST \
-              -H "Content-Type: application/json" \
-              -u "$DOCKERHUB_USERNAME:$DOCKERHUB_TOKEN" \
-              -d "{\"name\": \"$REPO_NAME\", \"is_private\": false}" \
-              https://hub.docker.com/v2/repositories/$DOCKERHUB_USERNAME/
-            echo "Repository created: $DOCKERHUB_USERNAME/$REPO_NAME"
-          else
-            echo "Repository already exists."
-          fi
 
       - name: Get current Docker Hub digest
         id: hub_digest
