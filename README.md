@@ -69,7 +69,8 @@ So the stack always pulls the **newest Kenium version** automatically.
 
 
 ## License
-This repository only provides the Docker setup fo Kenium-Music.
+This repository only provides the Docker setup for Kenium-Music.
+
 All credit for **Kenium Music** belongs to [ToddyTheNoobDud](https://github.com/ToddyTheNoobDud).
 
 ---
