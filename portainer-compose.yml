@@ -24,7 +24,9 @@ services:
       - SERVER_PORT=${NODE_PORT:-2333}
       - LAVALINK_SERVER_PASSWORD=${NODE_PASSWORD}
     volumes:
-      - lavalink_data:/opt/Lavalink
+      - lavalink_data:/opt/Lavalink/logs
+      - ./application.yml:/opt/Lavalink/application.yml
+      - ./plugins/:/opt/Lavalink/plugins/
     networks:
       - kenium_net
     ports:
