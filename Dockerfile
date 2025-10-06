@@ -9,6 +9,7 @@ COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 RUN pnpm install --no-frozen-lockfile
+RUN pnpm add -g tsx
 
 # Set create non-root user and set ownership
 RUN addgroup kenium && adduser -S -G kenium kenium
