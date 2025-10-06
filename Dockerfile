@@ -18,5 +18,8 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 RUN addgroup kenium && adduser -S -G kenium kenium
 USER kenium
 
+# Change ownership of the app directory to non-root user
+RUN chown -R kenium:kenium /usr/src/app
+
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["pnpm", "startNode"]
