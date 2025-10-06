@@ -6,7 +6,7 @@ services:
     container_name: kenium-music
     restart: unless-stopped
     env_file:
-      - stack.env
+      - .env
     depends_on:
       - lavalink
     volumes:
@@ -16,14 +16,15 @@ services:
     command: ["pnpm", "startNode"]
 
   lavalink:
-    image: fredboat/lavalink:latest
+    image: ghcr.io/lavalink-devs/lavalink:4-alpine
     container_name: lavalink
     restart: unless-stopped
     environment:
+      - _JAVA_OPTIONS=-Xmx1G         # adjust heap size if needed
       - SERVER_PORT=${NODE_PORT:-2333}
       - LAVALINK_SERVER_PASSWORD=${NODE_PASSWORD}
     volumes:
-      - lavalink_data:/opt/Lavalink/logs
+      - lavalink_data:/opt/Lavalink
     networks:
       - kenium_net
     ports:
