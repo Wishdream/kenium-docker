@@ -14,12 +14,10 @@ RUN pnpm install --no-frozen-lockfile
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Security: run as non-root user
+# Security: run as non-root user and change ownership of the app directory
 RUN addgroup kenium && adduser -S -G kenium kenium
-USER kenium
-
-# Change ownership of the app directory to non-root user
 RUN chown -R kenium:kenium /usr/src/app
+USER kenium
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["pnpm", "startNode"]
