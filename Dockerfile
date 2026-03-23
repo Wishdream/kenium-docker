@@ -2,13 +2,14 @@ FROM oven/bun:alpine
 
 WORKDIR /usr/src/app
 
-COPY . .
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY --chown=bun:bun . .
+COPY --chown=bun:bun docker-entrypoint.sh /usr/local/bin/
+
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-RUN bun install
+RUN mkdir -p /usr/src/app/data && chown -R bun:bun /usr/src/app/data
 
-RUN chown -R bun:bun /usr/src/app
+RUN bun install
 USER bun
 
 ENTRYPOINT ["docker-entrypoint.sh"]
