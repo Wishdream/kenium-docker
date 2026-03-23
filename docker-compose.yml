@@ -13,7 +13,7 @@ services:
       - kenium_data:/usr/src/app/data
     networks:
       - kenium_net
-    command: ["pnpm", "startNode"]
+    command: ["bun", "index.ts"]
 
   lavalink:
     image: ghcr.io/lavalink-devs/lavalink:4-alpine
