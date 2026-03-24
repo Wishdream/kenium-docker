@@ -12,4 +12,4 @@ RUN chown -R bun:bun /usr/src/app
 USER bun
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["bun", "run", "index.ts"]
+CMD ["bun", "run", "startBun"]
